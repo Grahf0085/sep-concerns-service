@@ -43,11 +43,23 @@ describe('separation of concerns service routes', () => {
     const aOrder = await Order.insert({
       quantity: 4
     });
-    
+
     const res = await request(app)
       .get(`/api/v1/orders/${aOrder.id}`);
 
     expect(res.body).toEqual(aOrder);
+  });
+
+  it('deletes an order in our database and sends a text message', async () => {
+
+    const badOrder = await Order.insert({
+      quantity: 435342
+    });
+
+    const res = await request(app)
+      .delete(`/api/v1/orders/${badOrder.id}`);
+
+    expect(res.body).toEqual(badOrder);
   });
 
 });
