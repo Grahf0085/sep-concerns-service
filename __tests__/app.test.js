@@ -4,11 +4,11 @@ const request = require('supertest');
 const app = require('../lib/app.js');
 const Order = require('../lib/models/Order');
 
-jest.mock('twilio', () => () => ({
-  messages: {
-    create: jest.fn(),
-  },
-}));
+// jest.mock('twilio', () => () => ({
+//   messages: {
+//     create: jest.fn(),
+//   },
+// }));
 
 describe('separation of concerns service routes', () => {
   
