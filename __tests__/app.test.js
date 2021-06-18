@@ -4,12 +4,6 @@ const request = require('supertest');
 const app = require('../lib/app.js');
 const Order = require('../lib/models/Order');
 
-// jest.mock('twilio', () => () => ({
-//   messages: {
-//     create: jest.fn(),
-//   },
-// }));
-
 describe('separation of concerns service routes', () => {
   
   beforeEach(() => {
@@ -22,6 +16,26 @@ describe('separation of concerns service routes', () => {
       .send({ quantity: 10 });
 
     expect(res.body).toEqual({ id: '1', quantity: 10 });
+  });
+
+  it('gets all orders in our database and send a text message', async () => {
+
+    const oneOrder = await Order.insert({
+      quantity: 3
+    });
+
+    const twoOrder = await Order.insert({
+      quantity: 2
+    });
+
+    const threeOrder = await Order.insert({
+      quantity: 1
+    });
+
+    const res = await request(app)
+      .get('/api/v1/orders');
+
+    expect(res.body).toEqual([oneOrder, twoOrder, threeOrder]);
   });
 
 });
