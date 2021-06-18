@@ -62,4 +62,23 @@ describe('separation of concerns service routes', () => {
     expect(res.body).toEqual(badOrder);
   });
 
+  it('updates an order in our database and sends a text message', async () => {
+
+    const changeOrder = await Order.insert({
+      quantity: 90
+    });
+
+    changeOrder.quantity = 101;
+
+    const res = await request(app)
+      .put(`/api/v1/orders/${changeOrder.id}`)
+      .send(changeOrder);
+
+    expect(res.body).toEqual({
+      id: '1',
+      quantity: 101
+    });
+
+  });
+
 });
