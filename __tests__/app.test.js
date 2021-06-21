@@ -68,7 +68,7 @@ describe('separation of concerns service routes', () => {
       quantity: 90
     });
 
-    changeOrder.quantity = 101;
+    changeOrder.quantity = 111;
 
     const res = await request(app)
       .put(`/api/v1/orders/${changeOrder.id}`)
@@ -76,7 +76,7 @@ describe('separation of concerns service routes', () => {
 
     expect(res.body).toEqual({
       id: '1',
-      quantity: 101
+      quantity: 111
     });
 
   });
